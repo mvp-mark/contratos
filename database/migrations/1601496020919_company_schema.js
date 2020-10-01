@@ -12,6 +12,12 @@ class CompanySchema extends Schema {
       table.string("company_name").notNullable();
       table.string("address").notNullable();
       table.string("tel").notNullable();
+      table
+      .integer("user_id")
+      .unsigned()
+      .notNullable()
+      .references("id")
+      .inTable("user");
       table.timestamps();
     });
   }

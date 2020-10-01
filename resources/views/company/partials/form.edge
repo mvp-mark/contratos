@@ -1,0 +1,74 @@
+{{--
+  AdonisJs provides CSRF Protection by default.
+  This mean that we need to send a csrf token for every POST, PUT or DELETE request.
+
+  ref: http://adonisjs.com/docs/4.0/csrf
+  --}}
+{{ csrfField() }}
+
+<div>
+  <h3 class="text-lg font-medium leading-6 text-gray-900">
+    Nova Empresa
+  </h3>
+  <p class="max-w-2xl mt-1 text-sm leading-5 text-gray-500">
+    Feel free to write whatever you want.
+  </p>
+</div>
+
+<div class="mt-6 sm:mt-5">
+  {{-- NAME Field --}}
+  <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+    @!component('components.label', { text: 'Nome da Empresa', related: 'name' })
+
+    <div class="mt-1 sm:mt-0 sm:col-span-2">
+      @!component('components.input', { name: 'name', value: old('name', company.name || ''), required: true })
+      {{ elIf('<p class="mt-2 text-sm text-red-600">$self</p>', getErrorFor('name'), hasErrorFor('name')) }}
+    </div>
+  </div>
+    {{-- COMPANY NAME Field --}}
+    <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+      @!component('components.label', { text: 'Razão Social', related: 'company_name' })
+  
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        @!component('components.input', { name: 'company_name', value: old('company_name', company.company_name || ''), required: true })
+        {{ elIf('<p class="mt-2 text-sm text-red-600">$self</p>', getErrorFor('company_name'), hasErrorFor('company_name')) }}
+      </div>
+    </div>
+    {{-- CNPJ Field --}}
+    <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+      @!component('components.label', { text: 'CNPJ', related: 'cnpj' })
+  
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        @!component('components.input', { name: 'cnpj', value: old('cnpj', company.cnpj || ''), required: true })
+        {{ elIf('<p class="mt-2 text-sm text-red-600">$self</p>', getErrorFor('cnpj'), hasErrorFor('cnpj')) }}
+      </div>
+    </div>
+    {{-- Address Field --}}
+    <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+      @!component('components.label', { text: 'Endereço da Empresa', related: 'address' })
+  
+      <div class="mt-1 sm:mt-0 sm:col-span-2">
+        @!component('components.input', { name: 'address', value: old('address', company.address || ''), required: true })
+        {{ elIf('<p class="mt-2 text-sm text-red-600">$self</p>', getErrorFor('address'), hasErrorFor('address')) }}
+      </div>
+    </div>
+      {{-- TEL Field --}}
+      <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+        @!component('components.label', { text: 'Telefone da Empresa', related: 'tel' })
+    
+        <div class="mt-1 sm:mt-0 sm:col-span-2">
+          @!component('components.input', { name: 'tel', value: old('tel', company.tel || ''), required: true })
+          {{ elIf('<p class="mt-2 text-sm text-red-600">$self</p>', getErrorFor('tel'), hasErrorFor('tel')) }}
+        </div>
+      </div>
+
+
+
+  <div class="pt-5 mt-8 border-t border-gray-200">
+    <div class="flex justify-end">
+      <button class="inline-flex justify-center px-4 py-2 text-sm font-medium leading-5 text-white transition duration-150 ease-in-out bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700">
+        Save
+      </button>
+    </div>
+  </div>
+</div>

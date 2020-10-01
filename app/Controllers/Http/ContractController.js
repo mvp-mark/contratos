@@ -1,5 +1,7 @@
 'use strict'
 
+const  Contract =use('App/Models/Contract')
+
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -17,9 +19,24 @@ class ContractController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
-  }
+  // async index ({ request, response, view }) {
+  // }
+  async index ({ view }) {
+    /**
+     * Fetch all posts inside our database.
+     *
+     * ref: http://adonisjs.com/docs/4.1/lucid#_all
+     */
+    const contracts = await Contract.all()
 
+    /**
+     * Render the view 'contracts.index'
+     * with the contracts fetched as data.
+     *
+     * ref: http://adonisjs.com/docs/4.1/views
+     */
+    return view.render('contracts.index', { contracts: contracts.toJSON() })
+  }
   /**
    * Render a form to be used for creating a new contract.
    * GET contracts/create

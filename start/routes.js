@@ -16,11 +16,23 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use("Route");
 
-Route.on("/").render("welcome");
+// Route.on("/").render("welcome");
+Route.get('/', 'ContractController.index')
 
-Route.post("/register", "AuthController.register");
-Route.post("/authenticate", "AuthController.authenticate");
+// Route.post("/register", "AuthController.register");
 Route.group(() => {
+  Route.get('login', 'SessionController.create')
+  Route.post('login', 'SessionController.store')
+
+  Route.get('register', 'AuthController.create')
+  Route.post('register', 'AuthController.store')
+}).middleware(['guest'])
+
+// Route.post("/authenticate", "AuthController.authenticate");
+// Route.on("/login").render("session/create");
+Route.group(() => {
+  Route.get('logout', 'SessionController.delete')
+
   Route.resource("contract", "ContratcController");
   Route.resource("company", "CompanyController");
 }).middleware("auth");

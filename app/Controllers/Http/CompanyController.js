@@ -1,6 +1,8 @@
 'use strict'
 
 const Company = use("App/Models/Company");
+const Contract = use("App/Models/Contract");
+const { validateAll } = use('Validator')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -20,11 +22,11 @@ class CompanyController {
    * @param {View} ctx.view
    */
   async index (
-    // { request, response, view }
+    { request, response, view }
     ) {
-    const companys = await Company.all();
+    const contracts = await Contract.all();
 
-    return companys;
+    return view.render('contract.index', { contracts: contracts.toJson()});
   }
 
   /**
@@ -37,6 +39,8 @@ class CompanyController {
    * @param {View} ctx.view
    */
   async create ({ request, response, view }) {
+
+    return view.render('company.create')
   }
 
   /**
@@ -47,9 +51,36 @@ class CompanyController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
-  }
+  async store ({ auth, session, request, response }) {
+    const data = request.only(['name','company_name', 'cnpj','address','tel'])
 
+    const validation = await validateAll(data, {
+      name: 'required',
+      company_name: 'required',
+      cnpj: 'required',
+      address: 'required',
+      tel: 'required',
+    })
+
+    if (validation.fails()) {
+      session
+        .withErrors(validation.messages())
+        .flashAll()
+
+      return response.redirect('back')
+    }
+
+    /**
+     * Creating a new post through the logged in user
+     * into the database.
+     *
+     * ref: http://adonisjs.com/docs/4.1/lucid#_create
+     */
+    const currentUser = await auth.getUser()
+    await currentUser.companys().create(data)
+
+    return response.redirect('/')
+  }
   /**
    * Display a single company.
    * GET companies/:id
