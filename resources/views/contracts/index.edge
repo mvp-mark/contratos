@@ -1,7 +1,7 @@
 @layout('layout.app')
 
 @section('content')
-  @set('title', 'Blog KD')
+  @set('title', 'Empresas')
 
   <div class="relative px-4 pt-16 pb-20 bg-gray-50 sm:px-6 lg:pt-24 lg:pb-28 lg:px-8">
     <div class="absolute inset-0">
@@ -12,7 +12,7 @@
       {{-- Section Title --}}
       <div class="text-center">
         <h2 class="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
-          Posts
+          Empresas
         </h2>
       </div>
 
@@ -22,7 +22,7 @@
 
             ref: http://edge.adonisjs.com/docs/iteration
           --}}
-          @each(post in posts, include = 'posts.partials.post-card')
+          @each(contract in contracts, include = 'contracts.partials.post-card')
           @else
             <div class="col-span-12">
               @component('components.alert', { type: 'info', color: 'blue' })

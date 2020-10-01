@@ -3,7 +3,7 @@
 @section('content')
   @set('title', 'Create a post')
 
-  <form action="/posts" method="POST">
+  <form action="/contracts" method="POST">
 
     {{--
       We are here checking if the key 'error' is in the session.
@@ -18,7 +18,7 @@
       @endcomponent
     @endif
 
-    @include('posts.partials.form')
+    @include('contracts.partials.form')
 
   </form>
 @endsection

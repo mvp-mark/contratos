@@ -7,11 +7,12 @@
   {{-- Card Body --}}
   <div class="flex flex-col justify-between flex-1 p-6 bg-white">
     <a href="#" class="block">
+      {{--  @each(contract in contracts, include = 'contracts.partials.post-card')  --}}
       <h3 class="mt-2 text-xl font-semibold leading-7 text-gray-900">
-        {{ post.title }}
+        {{ contracts.name }}
       </h3>
       <p class="mt-3 text-base leading-6 text-gray-500">
-        {{{ truncate(post.body, 25, '...') }}}
+        {{{ truncate(contracts.company_name, 25, '...') }}}
       </p>
     </a>
   </div>
@@ -24,10 +25,10 @@
   --}}
   @loggedIn
     <div class="flex items-center justify-end m-6 mt-0">
-      <a href="/posts/{{ post.id }}/edit" class="mr-2 text-sm font-medium leading-5 text-blue-600 hover:underline">
+      <a href="/contract/{{ contract.id }}/edit" class="mr-2 text-sm font-medium leading-5 text-blue-600 hover:underline">
         Edit
       </a>
-      <a href="/posts/{{ post.id }}/delete" class="text-sm font-medium leading-5 text-blue-600 hover:underline">
+      <a href="/contract/{{ contract.id }}/delete" class="text-sm font-medium leading-5 text-blue-600 hover:underline">
         Delete
       </a>
     </div>
