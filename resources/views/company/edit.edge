@@ -1,9 +1,9 @@
 @layout('layout.app')
 
 @section('content')
-  @set('title', 'Edit the post ' + post.id)
+  @set('title', 'Editar ' + company.name)
 
-  <form action="/posts/{{ post.id }}?_method=PUT" method="POST">
+  <form action="/company/{{ company.id }}?_method=PUT" method="POST">
 
     {{--
       We are here checking if the key 'error' is in the session.
@@ -18,7 +18,7 @@
       @endcomponent
     @endif
 
-    @include('posts.partials.form')
+    @include('company.partials.form')
 
   </form>
 @endsection

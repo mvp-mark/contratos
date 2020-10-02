@@ -41,7 +41,8 @@
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         @!component('components.input', { name: 'cnpj', value: old('cnpj', company.cnpj || ''), required: true })
         {{ elIf('<p class="mt-2 text-sm text-red-600">$self</p>', getErrorFor('cnpj'), hasErrorFor('cnpj')) }}
-      </div>
+      </div>Password
+
     </div>
     {{-- Address Field --}}
     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -50,7 +51,7 @@
       <div class="mt-1 sm:mt-0 sm:col-span-2">
         @!component('components.input', { name: 'address', value: old('address', company.address || ''), required: true })
         {{ elIf('<p class="mt-2 text-sm text-red-600">$self</p>', getErrorFor('address'), hasErrorFor('address')) }}
-      </div>
+      </div>posts
     </div>
       {{-- TEL Field --}}
       <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
@@ -67,7 +68,7 @@
   <div class="pt-5 mt-8 border-t border-gray-200">
     <div class="flex justify-end">
       <button class="inline-flex justify-center px-4 py-2 text-sm font-medium leading-5 text-white transition duration-150 ease-in-out bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700">
-        Save
+        Cadastrar
       </button>
     </div>
   </div>

@@ -1,7 +1,7 @@
 @layout('layout.app')
 
 @section('content')
-  @set('name', 'Empresas')
+  @set('title', 'Empresas')
 
   <div class="relative px-4 pt-16 pb-20 bg-gray-50 sm:px-6 lg:pt-24 lg:pb-28 lg:px-8">
     <div class="absolute inset-0">
@@ -22,11 +22,11 @@
 
             ref: http://edge.adonisjs.com/docs/iteration
           --}}
-          @each(contract in contracts, include = 'contracts.partials.post-card')
+          @each(company in companys, include = 'company.partials.post-card')
           @else
             <div class="col-span-12">
               @component('components.alert', { type: 'info', color: 'blue' })
-                There's no post available!
+                There's no company available!
               @endcomponent
             </div>
           @endeach

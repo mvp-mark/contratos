@@ -17,7 +17,7 @@
 const Route = use("Route");
 
 // Route.on("/").render("welcome");
-Route.get('/', 'ContractController.index')
+Route.get('/', 'CompanyController.index')
 
 // Route.post("/register", "AuthController.register");
 Route.group(() => {
@@ -32,7 +32,9 @@ Route.group(() => {
 // Route.on("/login").render("session/create");
 Route.group(() => {
   Route.get('logout', 'SessionController.delete')
-
-  Route.resource("contract", "ContratcController");
-  Route.resource("company", "CompanyController");
-}).middleware("auth");
+  Route.get('company/:id/delete', 'CompanyController.destroy')
+  Route.get('company/:id/edit', 'CompanyController.edit')
+  Route.put('company/:id', 'CompanyController.update')
+  Route.resource("contract", "ContractController");
+  // Route.resource("company", "CompanyController");
+}).middleware(["auth"]);

@@ -9,4 +9,4 @@ class Company extends Model {
   }
 }
 
-module.exports = Company;
+module.exports = Company

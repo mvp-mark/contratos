@@ -21,12 +21,10 @@ class CompanyController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index (
-    { request, response, view }
-    ) {
-    const contracts = await Contract.all();
-
-    return view.render('contract.index', { contracts: contracts.toJson()});
+  async index ({ view }) {
+    const companys = await Company.all();
+// return companys
+    return view.render('company.index', { companys: companys.toJSON()});
   }
 
   /**
@@ -103,6 +101,9 @@ class CompanyController {
    * @param {View} ctx.view
    */
   async edit ({ params, request, response, view }) {
+    const company = await Company.findOrFail(params.id)
+
+    return view.render('company.edit', { company: company.toJSON() })
   }
 
   /**
@@ -114,7 +115,37 @@ class CompanyController {
    * @param {Response} ctx.response
    */
   async update ({ params, request, response }) {
+    const data = request.only(['name','company_name', 'cnpj','address','tel'])
+
+    /**
+     * Validating our data.
+     *
+     * ref: http://adonisjs.com/docs/4.1/validator
+     */
+    const validation = await validateAll(data, {
+      name: 'required',
+      company_name: 'required',
+      cnpj: 'required',
+      address: 'required',
+      tel: 'required',
+    })
+
+    /**
+     * If validation fails, early returns with validation message.
+     */
+    if (validation.fails()) {
+      session
+        .withErrors(validation.messages())
+        .flashAll()
+
+      return response.redirect('back')
   }
+  const company = await Company.findOrFail(params.id)
+  company.merge(data)
+  await company.save()
+
+  return response.redirect('/')
+}
 
   /**
    * Delete a company with id.
@@ -125,6 +156,10 @@ class CompanyController {
    * @param {Response} ctx.response
    */
   async destroy ({ params, request, response }) {
+    const company = await Company.findOrFail(params.id)
+    await company.delete()
+
+    return response.redirect('/')
   }
 }
 
