@@ -18,21 +18,95 @@
 <div class="mt-6 sm:mt-5">
   {{-- Title Field --}}
   <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-    @!component('components.label', { text: 'Title', related: 'title' })
-
+    @!component('components.label', { text: 'Contratado', related: 'hired' })
+    
+    {{--  @each(contract in contracts)  --}}
     <div class="mt-1 sm:mt-0 sm:col-span-2">
-      @!component('components.input', { name: 'title', value: old('title', post.title || ''), required: true })
-      {{ elIf('<p class="mt-2 text-sm text-red-600">$self</p>', getErrorFor('title'), hasErrorFor('title')) }}
+      @!component('components.input', { name: 'hired', value: old('hired', contract.hired || ''), required: true })
+      {{ elIf('<p class="mt-2 text-sm text-red-600">$self</p>', getErrorFor('hired'), hasErrorFor('hired')) }}
     </div>
+    {{--  @endEach  --}}
   </div>
 
-  {{-- Body Field --}}
+  {{-- contract Field --}}
   <div class="mt-6 sm:mt-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-    @!component('components.label', { text: 'Body', related: 'body' })
+    @!component('components.label', { text: 'Contrato', related: 'contract' })
 
     <div class="mt-1 sm:mt-0 sm:col-span-2">
-      @!component('components.textarea', { name: 'body', value: old('body', post.body || '') })
-      {{ elIf('<p class="mt-2 text-sm text-red-600">$self</p>', getErrorFor('body'), hasErrorFor('body')) }}
+      @!component('components.input', { name: 'contract', value: old('contract', contract.contract || '') })
+      {{ elIf('<p class="mt-2 text-sm text-red-600">$self</p>', getErrorFor('contract'), hasErrorFor('contract')) }}
+    </div>
+  </div>
+  {{-- Object Field --}}
+  <div class="mt-6 sm:mt-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+    @!component('components.label', { text: 'Objeto', related: 'object' })
+
+    <div class="mt-1 sm:mt-0 sm:col-span-2">
+      @!component('components.textarea', { name: 'object', value: old('object', contract.object || '') })
+      {{ elIf('<p class="mt-2 text-sm text-red-600">$self</p>', getErrorFor('object'), hasErrorFor('object')) }}
+    </div>
+  </div>
+  {{-- value_monthly Field --}}
+  <div class="mt-6 sm:mt-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+    @!component('components.label', { text: 'Valor Mensal', related: 'value_monthly' })
+
+    <div class="mt-1 sm:mt-0 sm:col-span-2">
+      @!component('components.input', { name: 'value_monthly', value: old('value_monthly', contract.value_monthly || '') })
+      {{ elIf('<p class="mt-2 text-sm text-red-600">$self</p>', getErrorFor('value_monthly'), hasErrorFor('value_monthly')) }}
+    </div>
+  </div>
+  {{-- finish_date Field --}}
+  <div class="mt-6 sm:mt-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+    @!component('components.label', { text: 'Termino do Contrato', related: 'finish_date' })
+
+    <div class="mt-1 sm:mt-0 sm:col-span-2">
+      @!component('components.input', { name: 'finish_date', value: old('finish_date', contract.finish_date || ''), type: 'date' })
+      {{ elIf('<p class="mt-2 text-sm text-red-600">$self</p>', getErrorFor('finish_date'), hasErrorFor('finish_date')) }}
+    </div>
+  </div>
+  {{-- value_global Field --}}
+  <div class="mt-6 sm:mt-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+    @!component('components.label', { text: 'Valor Global', related: 'value_global' })
+
+    <div class="mt-1 sm:mt-0 sm:col-span-2">
+      @!component('components.input', { name: 'value_global', value: old('value_global', contract.value_global || '') })
+      {{ elIf('<p class="mt-2 text-sm text-red-600">$self</p>', getErrorFor('value_global'), hasErrorFor('value_global')) }}
+    </div>
+  </div>
+  {{-- modality Field --}}
+  <div class="mt-6 sm:mt-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+    @!component('components.label', { text: 'Modalidade', related: 'modality' })
+
+    <div class="mt-1 sm:mt-0 sm:col-span-2">
+      @!component('components.input', { name: 'modality', value: old('modality', contract.modality || '') })
+      {{ elIf('<p class="mt-2 text-sm text-red-600">$self</p>', getErrorFor('modality'), hasErrorFor('modality')) }}
+    </div>
+  </div>
+  {{-- supervisor Field --}}
+  <div class="mt-6 sm:mt-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+    @!component('components.label', { text: 'Fiscal Designado', related: 'supervisor' })
+
+    <div class="mt-1 sm:mt-0 sm:col-span-2">
+      @!component('components.input', { name: 'supervisor', value: old('supervisor', contract.supervisor || '') })
+      {{ elIf('<p class="mt-2 text-sm text-red-600">$self</p>', getErrorFor('supervisor'), hasErrorFor('supervisor')) }}
+    </div>
+  </div>
+  {{-- status Field --}}
+  <div class="mt-6 sm:mt-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+    @!component('components.label', { text: 'Status', related: 'status' })
+
+    <div class="mt-1 sm:mt-0 sm:col-span-2">
+      @!component('components.input', { name: 'status', value: old('status', contract.status || '') })
+      {{ elIf('<p class="mt-2 text-sm text-red-600">$self</p>', getErrorFor('status'), hasErrorFor('status')) }}
+    </div>
+  </div>
+  {{-- additive Field --}}
+  <div class="mt-6 sm:mt-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+    @!component('components.label', { text: 'Aditivo', related: 'additive' })
+
+    <div class="mt-1 sm:mt-0 sm:col-span-2">
+      @!component('components.input', { name: 'additive', value: old('additive', contract.additive || '') })
+      {{ elIf('<p class="mt-2 text-sm text-red-600">$self</p>', getErrorFor('additive'), hasErrorFor('additive')) }}
     </div>
   </div>
 

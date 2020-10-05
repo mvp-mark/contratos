@@ -17,10 +17,17 @@ class ContractSchema extends Schema {
       table.text("object", "longtext").notNullable();
       table.float("value_monthly").notNullable();
       table.date("finish_date").notNullable();
+      table.float("value_global").notNullable();
       table.string("modality").notNullable();
       table.string("supervisor").notNullable();
       table.string("status");
       table.string("additive");
+      table
+        .integer("user_id")
+        .unsigned()
+        .notNullable()
+        .references("id")
+        .inTable("user");
 
       table.timestamps();
     });

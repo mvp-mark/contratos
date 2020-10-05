@@ -1,6 +1,8 @@
-'use strict'
+"use strict";
 
-const  Contract =use('App/Models/Contract')
+const Contract = use("App/Models/Contract");
+const Company = use("App/Models/Company");
+const { validateAll } = use("Validator");
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -21,13 +23,13 @@ class ContractController {
    */
   // async index ({ request, response, view }) {
   // }
-  async index ({ view }) {
+  async index({ view }) {
     /**
      * Fetch all posts inside our database.
      *
      * ref: http://adonisjs.com/docs/4.1/lucid#_all
      */
-    const contracts = await Contract.all()
+    const contracts = await Contract.all();
 
     /**
      * Render the view 'contracts.index'
@@ -35,7 +37,7 @@ class ContractController {
      *
      * ref: http://adonisjs.com/docs/4.1/views
      */
-    return view.render('contracts.index', { contracts: contracts.toJSON() })
+    return view.render("contracts.index", { contracts: contracts.toJSON() });
   }
   /**
    * Render a form to be used for creating a new contract.
@@ -46,7 +48,49 @@ class ContractController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async create ({ request, response, view }) {
+  async store({ auth, session, request, response }) {
+    const data = request.only([
+      "hired",
+      "contract",
+      "object",
+      "value_monthly",
+      "finish_date",
+      "value_global",
+      "modality",
+      "supervisor",
+      "status",
+      "additive",
+    ]);
+
+    const validation = await validateAll(data, {
+      hired: "required",
+      contract: "required",
+      object: "required",
+      value_monthly: "required",
+      finish_date: "required",
+      value_global: "required",
+      modality: "required",
+      supervisor: "required",
+      status: "required",
+      additive: "required",
+    });
+
+    if (validation.fails()) {
+      session.withErrors(validation.messages()).flashAll();
+
+      return response.redirect("back");
+    }
+
+    /**
+     * Creating a new post through the logged in user
+     * into the database.
+     *
+     * ref: http://adonisjs.com/docs/4.1/lucid#_create
+     */
+    const currentUser = await auth.getUser();
+    await currentUser.contracts().create(data);
+
+    return response.redirect("/");
   }
 
   /**
@@ -57,7 +101,12 @@ class ContractController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async create({ request, response, view }) {
+    const companys = await Company.all();
+    return view.render(
+      "contracts.create"
+      // , { companys: companys.toJSON() }
+    );
   }
 
   /**
@@ -69,8 +118,7 @@ class ContractController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
-  }
+  async show({ params, request, response, view }) {}
 
   /**
    * Render a form to update an existing contract.
@@ -81,8 +129,7 @@ class ContractController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async edit ({ params, request, response, view }) {
-  }
+  async edit({ params, request, response, view }) {}
 
   /**
    * Update contract details.
@@ -92,7 +139,51 @@ class ContractController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update({ params, request, response }) {
+    const data = request.only([
+      "hired",
+      "contract",
+      "object",
+      "value_monthly",
+      "finish_date",
+      "value_global",
+      "modality",
+      "supervisor",
+      "status",
+      "additive",
+    ]);
+
+    /**
+     * Validating our data.
+     *
+     * ref: http://adonisjs.com/docs/4.1/validator
+     */
+    const validation = await validateAll(data, {
+      hired: "required",
+      contract: "required",
+      object: "required",
+      value_monthly: "required",
+      finish_date: "required",
+      value_global: "required",
+      modality: "required",
+      supervisor: "required",
+      status: "required",
+      additive: "required",
+    });
+
+    /**
+     * If validation fails, early returns with validation message.
+     */
+    if (validation.fails()) {
+      session.withErrors(validation.messages()).flashAll();
+
+      return response.redirect("back");
+    }
+    const contract = await Contract.findOrFail(params.id);
+    contract.merge(data);
+    await contract.save();
+
+    return response.redirect("/");
   }
 
   /**
@@ -103,8 +194,12 @@ class ContractController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
+  async destroy({ params, request, response }) {
+    const contract = await Contract.findOrFail(params.id);
+    await contract.delete();
+
+    return response.redirect("/");
   }
 }
 
-module.exports = ContractController
+module.exports = ContractController;
