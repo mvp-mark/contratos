@@ -1,5 +1,8 @@
 "use strict";
 
+// const { Database } = require('sqlite3');
+const Database = use('Database')
+
 const Contract = use("App/Models/Contract");
 const Company = use("App/Models/Company");
 const { validateAll } = use("Validator");
@@ -29,7 +32,10 @@ class ContractController {
      *
      * ref: http://adonisjs.com/docs/4.1/lucid#_all
      */
-    const contracts = await Contract.all();
+    const contracts = await Database.table('contracts').innerJoin('companies','contracts.hired','companies.id')
+    // .table('contracts').innerJoin('companies','contracts.hired','companies.id');
+    // all();
+    // query().with('teste').fetch();
 
     /**
      * Render the view 'contracts.index'
@@ -37,7 +43,10 @@ class ContractController {
      *
      * ref: http://adonisjs.com/docs/4.1/views
      */
-    return view.render("contracts.index", { contracts: contracts.toJSON() });
+    console.log( contracts); 
+    return view.render("contracts.index", { contracts
+      // : contracts.toJSON() 
+    });
   }
   /**
    * Render a form to be used for creating a new contract.
@@ -72,7 +81,7 @@ class ContractController {
       modality: "required",
       supervisor: "required",
       status: "required",
-      additive: "required",
+      // additive: "",
     });
 
     if (validation.fails()) {
@@ -129,7 +138,11 @@ class ContractController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async edit({ params, request, response, view }) {}
+  async edit({ params, request, response, view }) {
+    const contracts = await Contract.findOrFail(params.id);
+
+    return view.render("contracts.edit", { contracts: contracts.toJSON() });
+  }
 
   /**
    * Update contract details.

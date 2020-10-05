@@ -7,6 +7,10 @@ class Contract extends Model {
   user() {
     return this.belongsToMany("App/Models/User");
   }
+  teste() {
+    return this.belongsTo("App/Models/Company");
+  
+}
 }
 
 module.exports = Contract;

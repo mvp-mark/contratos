@@ -7,6 +7,9 @@ class Company extends Model {
   user() {
     return this.belongsToMany("App/Models/User");
   }
+  contract() {
+    return this.belongsToMany("App/Models/Contract");
+  }
 }
 
 module.exports = Company

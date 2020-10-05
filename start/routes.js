@@ -17,7 +17,7 @@
 const Route = use("Route");
 
 // Route.on("/").render("welcome");
-Route.get("/", "CompanyController.index");
+Route.get("/", "ContractController.index");
 
 // Route.post("/register", "AuthController.register");
 Route.group(() => {

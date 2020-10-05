@@ -12,8 +12,8 @@ class ContractSchema extends Schema {
         .unsigned()
         .notNullable()
         .references("id")
-        .inTable("company");
-      table.string("contract").notNullable();
+        .inTable("companies");
+      table.string("contract").notNullable().unique();
       table.text("object", "longtext").notNullable();
       table.float("value_monthly").notNullable();
       table.date("finish_date").notNullable();
