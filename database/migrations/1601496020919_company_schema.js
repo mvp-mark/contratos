@@ -18,7 +18,7 @@ class CompanySchema extends Schema {
         .unsigned()
         .notNullable()
         .references("id")
-        .inTable("user");
+        .inTable("users");
       table.timestamps();
     });
   }

@@ -3,7 +3,7 @@
 @section('content')
   @set('title', 'Edit the post ' + contracts.id)
 
-  <form action="/contracts/{{ contracts.id }}?_method=PUT" method="POST">
+  <form action="/contract/{{ contracts.id }}?_method=PUT" method="POST">
 
     {{--
       We are here checking if the key 'error' is in the session.

@@ -37,7 +37,7 @@ class CompanyController {
    * @param {View} ctx.view
    */
   async create({ request, response, view }) {
-    return view.render("company.create");
+    return view.render("company.create", {titleHead:'Cadastrar Empresa'});
   }
 
   /**
