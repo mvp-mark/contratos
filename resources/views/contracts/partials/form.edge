@@ -18,12 +18,12 @@
 <div class="mt-6 sm:mt-5">
   {{-- Title Field --}}
   <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-    @!component('components.label', { text: 'Contratado', related: 'hired' })
+    @!component('components.label', { text: 'Contratado', related: 'hired_id' })
     
     {{--  @each(contract in contracts)  --}}
     <div class="mt-1 sm:mt-0 sm:col-span-2">
-      @!component('components.input', { name: 'hired', value: old('hired', contract.hired || ''), required: true })
-      {{ elIf('<p class="mt-2 text-sm text-red-600">$self</p>', getErrorFor('hired'), hasErrorFor('hired')) }}
+      @!component('components.input', { name: 'hired_id', value: old('hired_id', contract.hired_id || ''), required: true })
+      {{ elIf('<p class="mt-2 text-sm text-red-600">$self</p>', getErrorFor('hired_id'), hasErrorFor('hired_id')) }}
     </div>
     {{--  @endEach  --}}
   </div>

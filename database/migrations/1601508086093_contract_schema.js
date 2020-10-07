@@ -8,7 +8,7 @@ class ContractSchema extends Schema {
     this.create("contracts", (table) => {
       table.increments();
       table
-        .integer("hired")
+        .integer("hired_id")
         .unsigned()
         .notNullable()
         .references("id")

@@ -2,9 +2,10 @@
 
 // const { Database } = require('sqlite3');
 const Database = use('Database')
+const Antl = use('Antl')
 
 const Contract = use("App/Models/Contract");
-const Company = use("App/Models/Company");
+// const Company = use("App/Models/Company");
 const { validateAll } = use("Validator");
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
@@ -32,9 +33,12 @@ class ContractController {
      *
      * ref: http://adonisjs.com/docs/4.1/lucid#_all
      */
-    const contracts = await Database.table('contracts').innerJoin('companies','contracts.hired','companies.id')
-    const date = await Database.raw('select finish_date.c DATEDIFF(finish_date.c,now()) as dias from  contracts as c ')
-    // .table('contracts').innerJoin('companies','contracts.hired','companies.id');
+    // const contracts = await Database.table('contracts').innerJoin('companies','contracts.hired_id','companies.id')
+    const contracts = await Contract.query().with('hired', (builder)=>{
+      builder.where('hired')
+    }).with('user').fetch();
+    // const date = await Database.raw('select finish_date.c DATEDIFF(finish_date.c,now()) as dias from  contracts as c ')
+    // .table('contracts').innerJoin('companies','contracts.hired_id','companies.id');
     // all();
     // query().with('teste').fetch();
 
@@ -46,9 +50,9 @@ class ContractController {
      * ref: http://adonisjs.com/docs/4.1/views
      * ref: http://adonisjs.com/docs/4.1/views
      */
-    console.log( contracts); 
-    console.log( date); 
-    return view.render("contracts.index", { contracts, titleHead:'Contratos'
+    console.log( {contracts:contracts.toJSON()}); 
+    // console.log( date); 
+    return view.render("contracts.index", { contracts:contracts.toJSON(), titleHead:'Contratos'
       // : contracts.toJSON() 
     });
   }
@@ -63,7 +67,7 @@ class ContractController {
    */
   async store({ auth, session, request, response }) {
     const data = request.only([
-      "hired",
+      "hired_id",
       "contract",
       "object",
       "value_monthly",
@@ -76,7 +80,7 @@ class ContractController {
     ]);
 
     const validation = await validateAll(data, {
-      hired: "required",
+      hired_id: "required",
       contract: "required",
       object: "required",
       value_monthly: "required",
@@ -158,7 +162,7 @@ class ContractController {
    */
   async update({ params, request, response }) {
     const data = request.only([
-      "hired",
+      "hired_id",
       "contract",
       "object",
       "value_monthly",
@@ -176,7 +180,7 @@ class ContractController {
      * ref: http://adonisjs.com/docs/4.1/validator
      */
     const validation = await validateAll(data, {
-      hired: "required",
+      hired_id: "required",
       contract: "required",
       object: "required",
       value_monthly: "required",

@@ -11,6 +11,7 @@
 |
 */
 const providers = [
+  '@adonisjs/antl/providers/AntlProvider',
   '@adonisjs/framework/providers/AppProvider',
   '@adonisjs/framework/providers/ViewProvider',
   '@adonisjs/lucid/providers/LucidProvider',
