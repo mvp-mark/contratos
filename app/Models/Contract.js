@@ -13,7 +13,7 @@ class Contract extends Model {
 
 static formatDates (field, value) {
      if (field === 'finish_date') {
-         return value.format('DD/MM/YYYY')
+        //  return value.format('DD/MM/YYYY')
         }
      return super.formatDates(field, value)
    }

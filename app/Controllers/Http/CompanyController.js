@@ -24,7 +24,7 @@ class CompanyController {
   async index({ view }) {
     const companys = await Company.all();
     // return companys
-    return view.render("company.index", { companys: companys.toJSON() });
+    return view.render("company.index", { companys: companys.toJSON(),titleHead:'Empresas Cadastradas' } );
   }
 
   /**

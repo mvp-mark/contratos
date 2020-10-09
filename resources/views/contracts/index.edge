@@ -57,12 +57,14 @@
             </tr>
           </thead>
           @each(contracts in contracts, include = 'contracts.partials.table')
+          @each(contract in contract)
           @else
             <div class="col-span-12">
               @component('components.alert', { type: 'info', color: 'blue' })
                 There's no contract available!
               @endcomponent
             </div>
+          @endeach
           @endeach
         </table>
       </div>

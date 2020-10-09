@@ -33,8 +33,8 @@ class ContractController {
      *
      * ref: http://adonisjs.com/docs/4.1/lucid#_all
      */
-    // const contracts = await Database.table('contracts').innerJoin('companies','contracts.hired_id','companies.id')
-    const contracts = await Contract.query().with('hired', (builder)=>{
+    // // const contract = await Database.table('contracts').innerJoin('companies','contracts.hired_id','companies.id')
+    const contracts = await Contract.query().innerJoin('companies','contracts.hired_id','companies.id').with('hired', (builder)=>{
       builder.where('hired')
     }).with('user').fetch();
     // const date = await Database.raw('select finish_date.c DATEDIFF(finish_date.c,now()) as dias from  contracts as c ')
@@ -50,9 +50,9 @@ class ContractController {
      * ref: http://adonisjs.com/docs/4.1/views
      * ref: http://adonisjs.com/docs/4.1/views
      */
-    console.log( {contracts:contracts.toJSON()}); 
+    console.log( {contracts:contracts.name}); 
     // console.log( date); 
-    return view.render("contracts.index", { contracts:contracts.toJSON(), titleHead:'Contratos'
+    return view.render("contracts.index", { contracts:contracts.toJSON(), titleHead:'Contratos',
       // : contracts.toJSON() 
     });
   }
@@ -119,7 +119,7 @@ class ContractController {
    * @param {Response} ctx.response
    */
   async create({ request, response, view }) {
-    const companys = await Company.all();
+    // const companys = await Company.all();
     return view.render(
       "contracts.create"
       // , { companys: companys.toJSON() }
