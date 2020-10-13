@@ -5,7 +5,7 @@ const Model = use("Model");
 
 class Company extends Model {
   user() {
-    return this.belongsToMany("App/Models/User");
+    return this.belongsTo("App/Models/User");
   }
   hired() {
     return this.hasMany("App/Models/Contract");

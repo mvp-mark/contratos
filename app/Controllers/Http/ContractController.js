@@ -5,7 +5,7 @@ const Database = use('Database')
 const Antl = use('Antl')
 
 const Contract = use("App/Models/Contract");
-// const Company = use("App/Models/Company");
+const Company = use("App/Models/Company");
 const { validateAll } = use("Validator");
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
@@ -119,10 +119,10 @@ class ContractController {
    * @param {Response} ctx.response
    */
   async create({ request, response, view }) {
-    // const companys = await Company.all();
+    const company = await Company.all();
     return view.render(
       "contracts.create"
-      // , { companys: companys.toJSON() }
+      , { company: company.toJSON() }
     );
   }
 
@@ -147,9 +147,25 @@ class ContractController {
    * @param {View} ctx.view
    */
   async edit({ params, request, response, view }) {
-    const contract = await Contract.findOrFail(params.id);
+    const contract = await Contract.find(params.id)
+    const company = await Company.all();
+console.log({contract:contract.toJSON()});
+console.log(contract)
 
-    return view.render("contracts.edit", { contract: contract.toJSON() });
+    return view.render("contracts.edit", { contract:contract.toJSON(),  company: company.toJSON() });
+  }
+
+  async info({ params, request, response, view }) {
+    const contracts = await  Contract.find(params.id)
+
+    const company = await Company.all();
+
+    console.log(contracts);
+
+    return view.render("contracts.info", { contracts:contracts.toJSON()
+      // :contracts.toJSON(),
+        // company: company.toJSON()
+       });
   }
 
   /**
@@ -160,7 +176,7 @@ class ContractController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {
+  async update({ params, request, response, session }) {
     const data = request.only([
       "hired_id",
       "contract",

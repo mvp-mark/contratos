@@ -15,9 +15,9 @@ class ContractSchema extends Schema {
         .inTable("companies");
       table.string("contract").notNullable().unique();
       table.text("object", "longtext").notNullable();
-      table.float("value_monthly").notNullable();
+      table.string("value_monthly").notNullable();
       table.date("finish_date").notNullable();
-      table.float("value_global").notNullable();
+      table.string("value_global").notNullable();
       table.string("modality").notNullable();
       table.string("supervisor").notNullable();
       table.string("status");

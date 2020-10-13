@@ -31,6 +31,7 @@ Route.group(() => {
 // Route.post("/authenticate", "AuthController.authenticate");
 // Route.on("/login").render("session/create");
 Route.group(() => {
+  Route.get("contract/:id/info", "ContractController.info");
   Route.get("logout", "SessionController.delete");
   Route.get("company/:id/delete", "CompanyController.destroy");
   Route.resource("contract", "ContractController");
