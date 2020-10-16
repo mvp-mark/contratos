@@ -23,6 +23,7 @@ const providers = [
   '@adonisjs/vow/providers/VowProvider',
   '@adonisjs/vow-browser/providers/VowBrowserProvider',
   '@adonisjs/validator/providers/ValidatorProvider',
+  '@ruanitto/adonis-report-builder/providers/ReportBuilder',
 
 ]
 

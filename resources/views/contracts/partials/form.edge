@@ -31,8 +31,8 @@
     
     <div class="mt-1 sm:mt-0 sm:col-span-2">
       <div class="max-w-xs rounded-md shadow-sm">
-      <select name="hired_id" class="block w-full transition duration-150 ease-in-out form-input sm:text-sm sm:leading-5" >
-        <option value="">Selecione uma Empresa</option>
+      <select name="hired_id" class="block w-full transition duration-150 ease-in-out form-input sm:text-sm sm:leading-5"  >
+        <option value={{old('hired_id', contract.hired_id || '')}}>{{old('company', hired.name || 'Selecione uma empresa')}}</option>
       @each(company in company)
   <option value="{{company.id}}">{{company.name}}</option>
       @endeach

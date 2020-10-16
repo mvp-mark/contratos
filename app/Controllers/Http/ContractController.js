@@ -4,6 +4,7 @@
 const Database = use('Database')
 const Antl = use('Antl')
 
+const ReportBuilder = use('ReportBuilder');
 const Contract = use("App/Models/Contract");
 const Company = use("App/Models/Company");
 const { validateAll } = use("Validator");
@@ -34,14 +35,19 @@ class ContractController {
      * ref: http://adonisjs.com/docs/4.1/lucid#_all
      */
     // // const contract = await Database.table('contracts').innerJoin('companies','contracts.hired_id','companies.id')
-    const contracts = await Contract.query().innerJoin('companies','contracts.hired_id','companies.id').with('hired', (builder)=>{
-      builder.where('hired')
-    }).with('user').fetch();
+    const contracts = await Contract.query('contracts')
+    .with('hired')
+    .fetch();
+    const days = await Database.raw('SELECT datediff(finish_date, now()) as days FROM `contracts`');
+
+    // const contracts = await Contract.query().with('user').with('hired')
+    // .where('DATEDIFF(finish_date,now())')
+    // .fetch();
     // const date = await Database.raw('select finish_date.c DATEDIFF(finish_date.c,now()) as dias from  contracts as c ')
     // .table('contracts').innerJoin('companies','contracts.hired_id','companies.id');
     // all();
     // query().with('teste').fetch();
-
+const company = contracts.hired;
     /**
      * Render the view 'contracts.index'
      * with the contracts fetched as data.
@@ -50,11 +56,47 @@ class ContractController {
      * ref: http://adonisjs.com/docs/4.1/views
      * ref: http://adonisjs.com/docs/4.1/views
      */
-    console.log( {contracts:contracts.name}); 
+    console.log( {days:days}); 
+    // console.log( {company}); 
     // console.log( date); 
-    return view.render("contracts.index", { contracts:contracts.toJSON(), titleHead:'Contratos',
+
+   
+
+    return view.render("contracts.index", { contracts:contracts.toJSON()
+      , titleHead:'Contratos', 
       // : contracts.toJSON() 
     });
+  }
+  async pdf({ view }) {
+    /**
+     * Fetch all posts inside our database.
+     *
+     * ref: http://adonisjs.com/docs/4.1/lucid#_all
+     */
+    // // const contract = await Database.table('contracts').innerJoin('companies','contracts.hired_id','companies.id')
+    const contracts = await Contract.query().with('user').with('hired').fetch();
+    // const date = await Database.raw('select finish_date.c DATEDIFF(finish_date.c,now()) as dias from  contracts as c ')
+    // .table('contracts').innerJoin('companies','contracts.hired_id','companies.id');
+    // all();
+    // query().with('teste').fetch();
+const company = contracts.hired;
+    /**
+     * Render the view 'contracts.index'
+     * with the contracts fetched as data.
+     *
+     * ref: http://adonisjs.com/docs/4.1/views
+     * ref: http://adonisjs.com/docs/4.1/views
+     * ref: http://adonisjs.com/docs/4.1/views
+     */
+    console.log( contracts); 
+    // console.log( {company}); 
+    // console.log( date); 
+
+    
+
+    return ReportBuilder.loadView('contracts.index', {contracts:contracts.toJSON()});
+      // : contracts.toJSON() 
+    
   }
   /**
    * Render a form to be used for creating a new contract.
@@ -156,16 +198,12 @@ console.log(contract)
   }
 
   async info({ params, request, response, view }) {
-    const contracts = await  Contract.find(params.id)
+    const contract = await  Contract.query().with('hired').with('user').where('id', params.id).first();
 
-    const company = await Company.all();
 
-    console.log(contracts);
+    console.log({contracts:contract});
 
-    return view.render("contracts.info", { contracts:contracts.toJSON()
-      // :contracts.toJSON(),
-        // company: company.toJSON()
-       });
+    return view.render("contracts.info", { contracts:contract.toJSON()});
   }
 
   /**
@@ -211,6 +249,7 @@ console.log(contract)
     /**
      * If validation fails, early returns with validation message.
      */
+
     if (validation.fails()) {
       session.withErrors(validation.messages()).flashAll();
 

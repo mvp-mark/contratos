@@ -1,7 +1,13 @@
 @layout('layout.app')
 
+<style>
+  tr:nth-child(even) {
+              bg-gray-500
+            }
+</style>
+
 @section('content')
-  @set('title', 'Empresas')
+  @set('title', 'Contratos')
 
   {{--  <div class="relative px-4 pt-16 pb-20 bg-gray-50 sm:px-6 lg:pt-24 lg:pb-28 lg:px-8">  --}}
     {{--  <div class="absolute inset-0">  --}}
@@ -23,9 +29,15 @@
             ref: http://edge.adonisjs.com/docs/iteration
           --}}
           @loggedIn
-          <a href="/contract/create" class="px-3 py-2 bg-orange  align-right rounded-md text-lg font-medium text-white hover:text-white hover:bg-gray-600 focus:outline-none focus:text-white focus:bg-gray-700">
-            Cadastrar Contrato
-          </a>
+          <div class="grid flex-end lg:justify-end lg:max-w-none">
+
+            <a href="/contract/create" class="px-3 py-2 bg-orange-400  align-right rounded-md text-lg font-medium text-white hover:text-white hover:bg-blue-900 focus:outline-none focus:text-white focus:bg-blue-400">
+              Cadastrar Contrato
+            </a>
+          <a href="/contract/pdf" class="px-3 py-2 bg-orange-400  align-right rounded-md text-lg font-medium text-white hover:text-white hover:bg-blue-900 focus:outline-none focus:text-white focus:bg-blue-400">
+              pdf
+            </a>
+          </div>
 @else
 @endloggedIn
           <div class="flex flex-col" style="padding-top:16px">
@@ -34,7 +46,10 @@
       <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
         <table class="min-w-full divide-y  divide-gray-400" >
           <thead>
-            <tr>
+            <tr style="tr:nth-child(even) {
+              background-color: black;
+            }"
+            >
               <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                 Contrato
               </th>

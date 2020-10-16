@@ -29,7 +29,7 @@ static formatDates (field, value) {
   // }
   static castDates(field, value) {
     if (field === 'finish_date')  return value ? value.format("DD/MM/YYYY") : value;
-    else return value ? value.format("DD/MM/YYYY hh:mm a") : value;
+    else return value ? value.format("DD/MM/YYYY") : value;
     // {
     //   return value.format('DD-MM-YYYY')
     // }
@@ -38,7 +38,7 @@ static formatDates (field, value) {
     return this.belongsTo("App/Models/User");
   }
   hired() {
-    return this.belongsTo("App/Models/Company");
+    return this.belongsTo("App/Models/Company",'hired_id', 'id');
   
 }
 }

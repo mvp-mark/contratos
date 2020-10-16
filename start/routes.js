@@ -32,6 +32,7 @@ Route.group(() => {
 // Route.on("/login").render("session/create");
 Route.group(() => {
   Route.get("contract/:id/info", "ContractController.info");
+  Route.get("contract/pdf", "ContractController.pdf");
   Route.get("logout", "SessionController.delete");
   Route.get("company/:id/delete", "CompanyController.destroy");
   Route.resource("contract", "ContractController");
